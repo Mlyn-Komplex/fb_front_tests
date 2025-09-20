@@ -114,7 +114,43 @@
   * {
     @apply border-border outline-ring/50;
   }
+
+  *:not([data-slot="scroll-area-scrollbar"]):not([data-slot="scroll-area-thumb"])::-webkit-scrollbar {
+    width: 12px;
+    background: #fff;
+  }
+
+  *:not([data-slot="scroll-area-scrollbar"]):not([data-slot="scroll-area-thumb"])::-webkit-scrollbar-thumb {
+    background: #bbb;
+    border-radius: 8px;
+    border: 3px solid #fff;
+
+  }
+
+  *:not([data-slot="scroll-area-scrollbar"]):not([data-slot="scroll-area-thumb"]) {
+    scrollbar-width: thin;
+    scrollbar-color: #bbb #fff;
+  }
+
   body {
     @apply bg-background text-foreground;
   }
+}
+
+.scroll-overlay {
+  scrollbar-gutter: stable overlay;
+  /* modern way */
+}
+
+.scroll-overlay::-webkit-scrollbar {
+  width: 8px;
+}
+
+.scroll-overlay::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.scroll-overlay::-webkit-scrollbar-thumb {
+  background-color: rgba(100, 100, 100, 0.5);
+  border-radius: 4px;
 }

@@ -39,11 +39,11 @@ export function RegisterForm({
                 />
               </div>
               <div className="grid gap-3">
-                <Label htmlFor="login">Login</Label>
+                <Label htmlFor="pasword">Password</Label>
                 <Input
-                  id="login"
+                  id="password"
                   type="text"
-                  placeholder="Your login"
+                  placeholder="Your password"
                   required
                 />
               </div>
