@@ -10,10 +10,12 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Bell, Search } from "lucide-react";
+import { useAuth } from "@/auth/AuthContext";
 
 export function Navigation() {
   const [searchOpen, setSearchOpen] = React.useState(false);
   const searchInputRef = React.useRef<HTMLInputElement>(null);
+  const { logout } = useAuth();
 
   return (
     <nav
@@ -47,7 +49,7 @@ export function Navigation() {
             type="text"
             placeholder="Search here..."
             className={cn(
-              "bg-transparent border-0 focus:ring-0 transition-all duration-300 focus-visible:ring-0"
+              "bg-transparent border-0 shadow-none focus:ring-0 transition-all duration-300 focus-visible:ring-0"
             )}
             onBlur={() => setSearchOpen(false)}
             onFocus={() => setSearchOpen(true)}
@@ -81,7 +83,7 @@ export function Navigation() {
           <DropdownMenuContent align="end" className="w-48">
             <DropdownMenuItem>Profile</DropdownMenuItem>
             <DropdownMenuItem>Settings</DropdownMenuItem>
-            <DropdownMenuItem>Logout</DropdownMenuItem>
+            <DropdownMenuItem onClick={logout}>Logout</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       </div>

@@ -4,12 +4,34 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import formImg from "@/assets/form_img.png";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
+import { useRegister } from "@/hooks/useRegister";
+import { useAuth } from "@/auth/AuthContext";
+import { useState } from "react";
+import { getAuthToken } from "@/api/auth";
 
 export function RegisterForm({
   className,
   ...props
 }: React.ComponentProps<"div">) {
+  const navigate = useNavigate();
+  const { login } = useAuth();
+  const { mutateAsync: registerUser } = useRegister();
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    try {
+      const user = await registerUser({ username, password });
+      const token = await getAuthToken({ username, password });
+      login(user, token);
+      navigate("/");
+    } catch (err) {
+      console.error("Login failed:", err);
+    }
+  };
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
       <Card className="overflow-hidden p-0">
@@ -21,7 +43,7 @@ export function RegisterForm({
               className="select-none pointer-events-none"
             />
           </div>
-          <form className="p-6 md:p-8">
+          <form onSubmit={handleSubmit} className="p-6 md:p-8">
             <div className="flex flex-col gap-6">
               <div className="flex flex-col items-center text-center">
                 <h1 className="text-2xl font-bold">Create your account</h1>
@@ -29,21 +51,23 @@ export function RegisterForm({
                   Register to get started
                 </p>
               </div>
-              <div className="grid gap-3">
-                <Label htmlFor="email">Email</Label>
+              <div className="grid gap-2">
+                <Label htmlFor="username">Username</Label>
                 <Input
-                  id="email"
-                  type="email"
-                  placeholder="m@example.com"
+                  id="username"
+                  placeholder="Your username"
+                  type="text"
+                  onChange={(e) => setUsername(e.target.value)}
                   required
                 />
               </div>
-              <div className="grid gap-3">
+              <div className="grid gap-2">
                 <Label htmlFor="pasword">Password</Label>
                 <Input
                   id="password"
-                  type="text"
+                  type="password"
                   placeholder="Your password"
+                  onChange={(e) => setPassword(e.target.value)}
                   required
                 />
               </div>

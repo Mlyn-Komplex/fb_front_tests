@@ -1,15 +1,18 @@
 import { createContext, useContext, useEffect, useState } from "react";
 
-interface User {
-  id: string;
-  name: string;
-  email: string;
+export interface User {
+  id: number;
+  username: string;
+}
+export interface Token {
+  access_token: string;
+  token_type: string;
 }
 
 interface AuthContextType {
   user: User | null;
-  token: string | null;
-  login: (user: User, token: string) => void;
+  token: Token | null;
+  login: (user: User, token: Token) => void;
   logout: () => void;
 }
 
@@ -17,7 +20,7 @@ const AuthContext = createContext<AuthContextType | null>(null);
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
-  const [token, setToken] = useState<string | null>(null);
+  const [token, setToken] = useState<Token | null>(null);
 
   useEffect(() => {
     // Load from storage on startup
@@ -25,15 +28,15 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     const savedToken = localStorage.getItem("token");
     if (savedUser && savedToken) {
       setUser(JSON.parse(savedUser));
-      setToken(savedToken);
+      setToken(JSON.parse(savedToken));
     }
   }, []);
 
-  const login = (user: User, token: string) => {
+  const login = (user: User, token: Token) => {
     setUser(user);
     setToken(token);
     localStorage.setItem("user", JSON.stringify(user));
-    localStorage.setItem("token", token);
+    localStorage.setItem("token", JSON.stringify(token));
   };
 
   const logout = () => {

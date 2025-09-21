@@ -2,6 +2,35 @@ import { useState } from "react";
 import Post from "@/components/post/post";
 import { PostModal } from "@/components/post/post-modal";
 
+function HomePage() {
+  const [selectedPostId, setSelectedPostId] = useState<string | null>(null);
+
+  const selectedPost = posts.find((post) => post.id === selectedPostId);
+
+  return (
+    <>
+      <div className="space-y-6 p-4 max-w-2xl mx-auto">
+        {posts.map((post) => (
+          <Post
+            key={post.id}
+            {...post}
+            variant="feed"
+            onCommentClick={() => setSelectedPostId(post.id)}
+          />
+        ))}
+      </div>
+
+      {selectedPostId && selectedPost && (
+        <PostModal
+          postId={selectedPostId}
+          post={selectedPost}
+          onClose={() => setSelectedPostId(null)}
+        />
+      )}
+    </>
+  );
+}
+
 const sampleComments = [
   {
     id: "0",
@@ -57,34 +86,5 @@ const posts = [
     currentUser: currentUser,
   },
 ];
-
-function HomePage() {
-  const [selectedPostId, setSelectedPostId] = useState<string | null>(null);
-
-  const selectedPost = posts.find((post) => post.id === selectedPostId);
-
-  return (
-    <>
-      <div className="space-y-6 p-4 max-w-2xl mx-auto">
-        {posts.map((post) => (
-          <Post
-            key={post.id}
-            {...post}
-            variant="feed"
-            onCommentClick={() => setSelectedPostId(post.id)}
-          />
-        ))}
-      </div>
-
-      {selectedPostId && selectedPost && (
-        <PostModal
-          postId={selectedPostId}
-          post={selectedPost}
-          onClose={() => setSelectedPostId(null)}
-        />
-      )}
-    </>
-  );
-}
 
 export default HomePage;
