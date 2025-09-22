@@ -9,6 +9,8 @@ import { useRegister } from "@/hooks/useRegister";
 import { useAuth } from "@/auth/AuthContext";
 import { useState } from "react";
 import { getAuthToken } from "@/api/auth";
+import { toast } from "sonner";
+import { AxiosError } from "axios";
 
 export function RegisterForm({
   className,
@@ -28,8 +30,10 @@ export function RegisterForm({
       const token = await getAuthToken({ username, password });
       login(user, token);
       navigate("/");
-    } catch (err) {
-      console.error("Login failed:", err);
+    } catch (err: unknown) {
+      const error = err as AxiosError<{ detail: string }>;
+      console.log(error);
+      toast.error(error.response?.data?.detail || "Something went wrong");
     }
   };
   return (

@@ -8,6 +8,8 @@ import { Link } from "react-router";
 import { useState } from "react";
 import { useGetAuthToken } from "@/hooks/useGetAuthToken";
 import { useNavigate } from "react-router";
+import type { AxiosError } from "axios";
+import { toast } from "sonner";
 
 export function LoginForm({
   className,
@@ -19,8 +21,14 @@ export function LoginForm({
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    await mutation.mutateAsync(formData);
-    navigate("/");
+    try {
+      await mutation.mutateAsync(formData);
+      navigate("/");
+    } catch (err: unknown) {
+      const error = err as AxiosError<{ detail: string }>;
+      console.log(error);
+      toast.error(error.response?.data?.detail || "Something went wrong");
+    }
   };
 
   return (
