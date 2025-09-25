@@ -26,7 +26,6 @@ export function LoginForm({
       navigate("/");
     } catch (err: unknown) {
       const error = err as AxiosError<{ detail: string }>;
-      console.log(error);
       toast.error(error.response?.data?.detail || "Something went wrong");
     }
   };
