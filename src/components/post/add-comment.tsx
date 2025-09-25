@@ -1,15 +1,13 @@
 import { useState } from "react";
 import { Button } from "../ui/button";
-import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+import { Avatar, AvatarFallback } from "../ui/avatar";
 import { Textarea } from "../ui/textarea";
 import { Send } from "lucide-react";
 import { cn } from "@/lib/utils";
+import type { User } from "@/auth/AuthContext";
 
 interface AddCommentProps {
-  currentUser: {
-    name: string;
-    image?: string;
-  };
+  currentUser: User;
   onAddComment: (content: string) => void;
   className?: string;
 }
@@ -32,10 +30,8 @@ export function AddComment({
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === "Enter") {
       if (e.shiftKey) {
-        // Shift+Enter: let the default behavior (new line) happen
         return;
       } else {
-        // Enter without shift: submit the form
         e.preventDefault();
         if (content.trim()) {
           onAddComment(content);
@@ -54,8 +50,8 @@ export function AddComment({
       )}
     >
       <Avatar className="h-8 w-8">
-        <AvatarImage src={currentUser.image} />
-        <AvatarFallback>{currentUser.name[0]}</AvatarFallback>
+        {/* <AvatarImage src={currentUser.image} /> */}
+        <AvatarFallback>{currentUser.username}</AvatarFallback>
       </Avatar>
       <div className="flex-1 relative">
         <Textarea
