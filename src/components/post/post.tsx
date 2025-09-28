@@ -13,7 +13,7 @@ import { formatTimeAgo } from "@/lib/utils";
 import { useAuth } from "@/auth/AuthContext";
 import { useLikePost } from "@/hooks/useLikePost";
 import { useDislikePost } from "@/hooks/useDislikePost";
-// import { useDeletePost } from "@/hooks/useDeletePost"; // you need to implement this hook
+
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -84,12 +84,13 @@ export function Post(post: PostProps) {
               asChild
               className={`${post.variant === "modal" && "invisible"} `}
             >
-              <Button variant="ghost" size="icon">
+              <Button aria-label="More Options" variant="ghost" size="icon">
                 <MoreHorizontal className="h-5 w-5" />
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
               <DropdownMenuItem
+                aria-label="Delete action"
                 className="text-red-600 focus:text-red-600"
                 onClick={(e) => {
                   e.stopPropagation();
@@ -122,6 +123,7 @@ export function Post(post: PostProps) {
       {/* Actions */}
       <div className="flex justify-between border-t pt-2 gap-x-2">
         <Button
+          aria-label="Like"
           variant={liked ? "default" : "ghost"}
           size="sm"
           className="flex items-center gap-2 flex-1"
@@ -169,6 +171,7 @@ export function Post(post: PostProps) {
               Cancel
             </Button>
             <Button
+              aria-label="Delete Post"
               variant="destructive"
               onClick={handleDelete}
               disabled={deleteMutation.isPending}
