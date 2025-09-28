@@ -28,5 +28,7 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["src"]
+  "types": ["vitest/dist/index.d.ts"],
+
+  "include": ["src", "src/tests/globals.d.ts"]
 }
