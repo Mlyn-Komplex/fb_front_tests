@@ -6,7 +6,6 @@
     },
     "types": ["vitest/globals", "node"]
   },
-
   "files": [],
   "references": [
     { "path": "./tsconfig.app.json" },
