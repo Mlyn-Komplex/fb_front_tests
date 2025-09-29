@@ -11,7 +11,10 @@ function HomePage() {
 
   return (
     <>
-      <div className="space-y-6 p-4 max-w-2xl mx-auto">
+      <div
+        data-testid="homepage_div"
+        className="space-y-6 p-4 max-w-2xl mx-auto"
+      >
         <AddPost />
         {sortedPosts?.map((post) => (
           <Post
