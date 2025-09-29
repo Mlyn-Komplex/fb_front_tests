@@ -2,7 +2,6 @@ import { render, screen, fireEvent } from "@testing-library/react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { PostModal } from "./post-modal";
 import type { PostData } from "@/types/posts.types";
-import { AuthProvider } from "@/auth/AuthContext";
 
 // Mock the hooks
 vi.mock("@/hooks/useLikePost", () => ({
@@ -35,7 +34,7 @@ vi.mock("@/hooks/useAddComment", () => ({
 
 // Mock the utils
 vi.mock("@/lib/utils", () => ({
-  formatTimeAgo: (date: string) => "2 hours ago",
+  formatTimeAgo: (_date: string) => "2 hours ago",
   cn: (...classes: (string | undefined)[]) => classes.filter(Boolean).join(" "),
 }));
 

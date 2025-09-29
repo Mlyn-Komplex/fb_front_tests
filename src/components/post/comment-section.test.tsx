@@ -14,7 +14,7 @@ vi.mock("@/hooks/useAddComment", () => ({
 
 // Mock the utils
 vi.mock("@/lib/utils", () => ({
-  formatTimeAgo: (date: string) => "2 hours ago",
+  formatTimeAgo: (_date: string) => "2 hours ago",
   cn: (...classes: (string | undefined)[]) => classes.filter(Boolean).join(" "),
 }));
 
