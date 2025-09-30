@@ -38,5 +38,5 @@ jobs:
 
       - name: Push image
         run:
-          docker tag fb-front:latest your-dockerhub-username/fb-front:latest &&
-          docker push your-dockerhub-username/fb-front:latest
+          docker tag fb-front:latest flugzeug/fb-front:latest &&
+          docker push flugzeug/fb-front:latest
