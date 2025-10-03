@@ -6,7 +6,7 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: dummy(doesnt exist)
 
     steps:
       - name: Checkout repo
@@ -36,7 +36,11 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Push image
-        run:
-          docker tag fb-front:latest flugzeug/fb-front:latest &&
-          docker push flugzeug/fb-front:latest
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+      - name: Build and push
+        uses: docker/build-push-action@v6
+        with:
+          push: true
+          tags: ${{ vars.DOCKERHUB_USERNAME }}/python-api:${{ github.sha }}
+          file: Dockerfile
