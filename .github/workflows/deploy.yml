@@ -6,7 +6,7 @@ on:
 
 jobs:
   build:
-    runs-on: dummy(doesnt exist)
+    runs-on: arc-runner-set
 
     steps:
       - name: Checkout repo
